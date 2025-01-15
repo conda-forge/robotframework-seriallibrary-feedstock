@@ -5,7 +5,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/r/robotframework-seriallibrary/robotframework-seriallibrary-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/r/robotframework-seriallibrary/robotframework-seriallibrary-{{ version }}.tar.gz
   sha256: f20befe5c1106dd8ddca9f60a2f18bf5ec7d5f06f6f09a03fa66bae54777e6bb
   patches:
     - 0000-fix-install-requires-install-requires.patch
@@ -16,17 +16,17 @@ build:
     # remove the broken `pyproject.toml` for now
     - {{ PYTHON }} -c "__import__('os').unlink('pyproject.toml')"
     - {{ PYTHON }} -m pip install . -vv
-  number: 0
+  number: 1
 
 requirements:
   host:
-    - python >=3.8
+    - python {{ python_min }}
     - pip
     # could be restored later, but `setup.py`` is also fine, while supported
     # - poetry-core >=1.0.0
   run:
     - pyserial
-    - python >=3.8
+    - python >={{ python_min }}
     - robotframework
 
 test:
@@ -36,6 +36,7 @@ test:
     - pip check
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://github.com/whosaysni/robotframework-seriallibrary
