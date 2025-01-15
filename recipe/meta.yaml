@@ -23,6 +23,7 @@ requirements:
     - pip
     # could be restored later, but `setup.py`` is also fine, while supported
     # - poetry-core >=1.0.0
+    - setuptools
     - python {{ python_min }}
   run:
     - pyserial
