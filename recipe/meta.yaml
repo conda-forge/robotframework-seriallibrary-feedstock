@@ -11,32 +11,32 @@ source:
     - 0000-fix-install-requires-install-requires.patch
 
 build:
+  number: 1
   noarch: python
   script:
     # remove the broken `pyproject.toml` for now
     - {{ PYTHON }} -c "__import__('os').unlink('pyproject.toml')"
-    - {{ PYTHON }} -m pip install . -vv
-  number: 1
+    - {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation --disable-pip-version-check
 
 requirements:
   host:
-    - python {{ python_min }}
     - pip
     # could be restored later, but `setup.py`` is also fine, while supported
     # - poetry-core >=1.0.0
+    - python {{ python_min }}
   run:
     - pyserial
     - python >={{ python_min }}
     - robotframework
 
 test:
+  requires:
+    - pip
+    - python {{ python_min }}
   imports:
     - SerialLibrary
   commands:
     - pip check
-  requires:
-    - pip
-    - python {{ python_min }}
 
 about:
   home: https://github.com/whosaysni/robotframework-seriallibrary
